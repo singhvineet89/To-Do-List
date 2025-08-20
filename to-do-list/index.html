@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do-List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="to-do-app">
+            <h2>
+                To-Do List 
+                <img style="height: 40px; width: 40px;" src="images/todo1.avif">
+            </h2>
+
+            <!-- Dark Mode Toggle -->
+            <button id="toggle-dark" class="dark-btn">🌙 Dark Mode</button>
+
+            <div class="row">
+                <input type="text" id="input-box" placeholder="Add a task">
+                <select id="category">
+                    <option value="work">Work</option>
+                    <option value="personal">Personal</option>
+                    <option value="urgent">Urgent</option>
+                </select>
+                <button onclick="addTask()">Add</button>
+            </div>
+
+            <!-- Task Counter -->
+            <p id="task-counter">0 tasks total</p>
+            <div class="controls">
+                <input type="text" id="searchInput" placeholder="Search tasks..." >
+                <select id="filterCategory">
+                <option value="all">All</option>
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="urgent">Urgent</option>
+            </select>
+            </div>
+
+
+            <ul id="list-container"></ul>
+        </div>
+        <footer>
+    <p>Built with ❤️ & ☕ by <span>@RyanCodes</span></p>
+    <div class="footer-socials">
+      <a href="https://github.com/singhvineet89" target="_blank">🐙 GitHub</a>
+      <a href="https://www.linkedin.com/in/singhvineet89/" target="_blank">💼 LinkedIn</a>
+      <a href="https://twitter.com" target="_blank">🐦 Twitter</a>
+    </div>
+  </footer>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif,Tahoma, Geneva, Verdana;
+  box-sizing: border-box;
+}
+
+/* Light Mode Background */
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #89f7fe, #66a6ff);  /* soft blue → light aqua */
+  padding: 10px;
+  transition: background 0.6s ease-in-out;
+}
+
+/* Dark Mode Background */
+body.dark .container {
+   background: linear-gradient(135deg, #141e30, #243b55); /* deep navy → cool steel */
+}
+
+
+.to-do-app {
+  width: 100%;
+  max-width: 540px;
+  background: #fff;
+  margin: 80px auto 20px;
+  padding: 40px 30px 50px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  transition: background 0.4s, color 0.4s;
+}
+
+.to-do-app h2 {
+  color: #4e80d0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #edeef0;
+  border-radius: 30px;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+}
+
+input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 10px;
+  font-size: 14px;
+}
+
+select {
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 20px;
+  background: #fff;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+button {
+  border: none;
+  outline: none;
+  padding: 14px 30px;
+  background: linear-gradient(135deg, #ff5945, #ff9966);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 40px;
+  transition: transform 0.2s, background 0.3s;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #ff7961, #ffcc80);
+  transform: scale(1.05);
+}
+
+/* Dark Mode Toggle Button */
+.dark-btn {
+  background: #444;
+  margin-bottom: 15px;
+  font-size: 14px;
+  padding: 8px 20px;
+}
+.dark-btn:hover { background: #666; }
+
+/* Existing styles remain same */
+
+/* Footer Styles */
+footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  background: rgba(255, 255, 255, 0.1); /* subtle glass effect */
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+  border-radius: 12px 12px 0 0;
+  font-size: 14px;
+  color: #f1f1f1;
+}
+
+footer span {
+  font-weight: bold;
+  color: #ffd700; /* golden highlight for @RyanCodes */
+}
+
+.footer-socials {
+  margin-top: 10px;
+}
+
+.footer-socials a {
+  margin: 0 8px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #e0e0e0;
+  transition: color 0.3s ease;
+}
+
+.footer-socials a:hover {
+  color: #ffd700;
+}
+
+/* Tasks */
+ul li {
+  /* key fix: flex container so badge stays in-flow, not absolute */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 17px;
+  /* left padding leaves room for the pseudo checkbox; right padding leaves room for delete button */
+  padding: 14px 60px 14px 50px;
+  margin: 8px 0;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s, background 0.2s, opacity .25s ease, max-height .25s ease, margin .25s ease, padding .25s ease;
+  position: relative;
+  min-height: 48px;
+}
+
+ul li:hover {
+  background: #f1f1f1;
+  transform: translateY(-2px);
+}
+
+/* Checkbox (un-checked) */
+ul li::before {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 16px;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+/* Checkbox (checked) */
+ul li.checked {
+  color: #555;
+  text-decoration: line-through;
+}
+ul li.checked::before {
+  content: '✔';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: white;
+  background-color: #4CAF50;
+  border: none;
+  box-shadow: 0 0 6px rgba(76, 175, 80, 0.6);
+}
+ul li.removing {
+  opacity: 0;
+  transform: translateX(12px);
+  max-height: 0;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+
+/* Delete button — IMPORTANT: scope to non-badge span */
+ul li span {
+  cursor: pointer;
+}
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+#filterCategory {
+  padding: 8px 12px;
+  
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+}
+#searchInput  {
+  padding: 8px 12px;
+  color: #ff5945;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+}
+.dragging {
+  opacity: 0.5;
+  background: rgba(0, 123, 255, 0.1);
+  border: 2px dashed #007bff;
+}
+
+
+#searchInput {
+  flex: 1;
+}
+
+ul li span.delete {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  font-size: 20px;
+  color: #555;
+  line-height: 28px;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+ul li span.delete:hover { background: #edeef0; }
+
+/* Badge styles (stay within container) */
+.badge {
+  display: inline-block;
+  margin-left: auto;   /* pushes badge to the right inside the flex row */
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: white;
+  white-space: nowrap; /* avoid multi-line badge */
+  cursor: pointer;
+}
+.badge.work { background: #2196F3; }
+.badge.personal { background: #9C27B0; }
+.badge.urgent { background: #f44336; }
+
+/* Counter */
+#task-counter {
+  margin: 6px 0 10px 2px;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Dark Mode */
+body.dark {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #eee;
+}
+body.dark .to-do-app { background: #222; color: #fff; }
+body.dark ul li { background: #333; color: #eee; }
+body.dark ul li:hover { background: #444; }
