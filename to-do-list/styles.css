@@ -12,6 +12,7 @@
   background: linear-gradient(135deg, #89f7fe, #66a6ff);  /* soft blue → light aqua */
   padding: 10px;
   transition: background 0.6s ease-in-out;
+  flex-wrap: wrap;
 }
 
 /* Dark Mode Background */
@@ -78,6 +79,7 @@ button {
   cursor: pointer;
   border-radius: 40px;
   transition: transform 0.2s, background 0.3s;
+  flex-shrink: 0;
 }
 
 button:hover {
@@ -147,6 +149,7 @@ ul li {
   transition: transform 0.2s, background 0.2s, opacity .25s ease, max-height .25s ease, margin .25s ease, padding .25s ease;
   position: relative;
   min-height: 48px;
+  overflow-y: auto;
 }
 
 ul li:hover {
@@ -281,3 +284,83 @@ body.dark {
 body.dark .to-do-app { background: #222; color: #fff; }
 body.dark ul li { background: #333; color: #eee; }
 body.dark ul li:hover { background: #444; }
+
+/* ---------------- Responsive Fixes ---------------- */
+@media (max-width: 600px) {
+  /* Reduce outer padding for mobile */
+  .to-do-app {
+    margin: 40px auto 20px;
+    padding: 20px 15px 30px;
+  }
+
+  /* Stack inputs instead of overflow */
+  .row {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .row input[type="text"],
+  .row select,
+  .row button {
+    width: 100%;     /* take full width on small screens */
+    margin: 0;       /* reset right margin */
+  }
+
+  .row button {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Search + filter controls also stack */
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .controls input,
+  .controls select {
+    width: 100%;
+  }
+
+  /* Footer text shrink for small devices */
+  footer {
+    font-size: 12px;
+    padding: 12px;
+  }
+
+  footer .footer-socials a {
+    display: inline-block;
+    margin: 5px;
+    font-size: 12px;
+  }
+  body {
+    padding: 10px;
+  }
+
+  #input-box {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 8px;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  ul li {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  ul li span {
+    font-size: 12px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+  }
+}
