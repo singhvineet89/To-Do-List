@@ -1,3 +1,4 @@
+/* ---------- styles.css (updated) ---------- */
 * {
   margin: 0;
   padding: 0;
@@ -9,7 +10,7 @@
 .container {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(135deg, #89f7fe, #66a6ff);  /* soft blue → light aqua */
+  background: linear-gradient(135deg, #89f7fe, #66a6ff);
   padding: 10px;
   transition: background 0.6s ease-in-out;
   flex-wrap: wrap;
@@ -17,9 +18,8 @@
 
 /* Dark Mode Background */
 body.dark .container {
-   background: linear-gradient(135deg, #141e30, #243b55); /* deep navy → cool steel */
+  background: linear-gradient(135deg, #141e30, #243b55);
 }
-
 
 .to-do-app {
   width: 100%;
@@ -71,6 +71,7 @@ select {
 
 button {
   border: none;
+  margin: 0%;
   outline: none;
   padding: 14px 30px;
   background: linear-gradient(135deg, #ff5945, #ff9966);
@@ -96,14 +97,12 @@ button:hover {
 }
 .dark-btn:hover { background: #666; }
 
-/* Existing styles remain same */
-
 /* Footer Styles */
 footer {
   text-align: center;
   padding: 20px;
   margin-top: 40px;
-  background: rgba(255, 255, 255, 0.1); /* subtle glass effect */
+  background: rgba(255, 255, 255, 0.1);
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(6px);
   border-radius: 12px 12px 0 0;
@@ -113,7 +112,7 @@ footer {
 
 footer span {
   font-weight: bold;
-  color: #ffd700; /* golden highlight for @RyanCodes */
+  color: #ffd700;
 }
 
 .footer-socials {
@@ -132,16 +131,15 @@ footer span {
   color: #ffd700;
 }
 
-/* Tasks */
+/* ---------------- TASK LIST ---------------- */
+/* Each <li> is a flex row: pseudo checkbox on the left (absolute), task text as a flex child, badge and delete to the right */
 ul li {
-  /* key fix: flex container so badge stays in-flow, not absolute */
   display: flex;
   align-items: center;
   gap: 8px;
 
   font-size: 17px;
-  /* left padding leaves room for the pseudo checkbox; right padding leaves room for delete button */
-  padding: 14px 60px 14px 50px;
+  padding: 14px 60px 14px 50px; /* left reserve for pseudo checkbox, right reserve for delete (backwards-compatible) */
   margin: 8px 0;
   background: #f9f9f9;
   border-radius: 8px;
@@ -149,45 +147,23 @@ ul li {
   transition: transform 0.2s, background 0.2s, opacity .25s ease, max-height .25s ease, margin .25s ease, padding .25s ease;
   position: relative;
   min-height: 48px;
-  overflow-y: auto;
+  /* removed per-item scrollers — let content wrap instead */
 }
 
+/* Hover */
 ul li:hover {
   background: #f1f1f1;
   transform: translateY(-2px);
 }
 
-/* Checkbox (un-checked) */
-ul li::before {
-  content: '';
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  border: 2px solid #555;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 16px;
-  background-color: transparent;
-  transition: all 0.3s ease;
-}
 
-/* Checkbox (checked) */
+
+/* Checked state */
 ul li.checked {
   color: #555;
   text-decoration: line-through;
 }
-ul li.checked::before {
-  content: '✔';
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  color: white;
-  background-color: #4CAF50;
-  border: none;
-  box-shadow: 0 0 6px rgba(76, 175, 80, 0.6);
-}
+
 ul li.removing {
   opacity: 0;
   transform: translateX(12px);
@@ -198,10 +174,13 @@ ul li.removing {
   overflow: hidden;
 }
 
-/* Delete button — IMPORTANT: scope to non-badge span */
-ul li span {
+/* NOTE: previously you had "ul li span { cursor: pointer }" which applied to all spans (including text). */
+/* That caused awkward UX and styling on mobile. Narrow that selector below to apply only to delete if you use it. */
+ul li span.delete {
   cursor: pointer;
 }
+
+/* Controls */
 .controls {
   display: flex;
   justify-content: space-between;
@@ -212,7 +191,6 @@ ul li span {
 
 #filterCategory {
   padding: 8px 12px;
-  
   border-radius: 8px;
   border: 1px solid #ccc;
   outline: none;
@@ -232,11 +210,9 @@ ul li span {
   border: 2px dashed #007bff;
 }
 
+#searchInput { flex: 1; }
 
-#searchInput {
-  flex: 1;
-}
-
+/* Delete button (if present) — kept non-absolute in a later revision; you can adjust if you add one */
 ul li span.delete {
   position: absolute;
   right: 15px;
@@ -254,16 +230,32 @@ ul li span.delete {
 }
 ul li span.delete:hover { background: #edeef0; }
 
-/* Badge styles (stay within container) */
+/* ---------------- NEW: safe task-text element ---------------- */
+/* This is the key: make task text a proper flex child that can shrink/wrap on very small screens */
+.task-text {
+  flex: 1 1 auto;       /* can grow and shrink */
+  min-width: 0;         /* very important — allows shrinking inside flex */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  /* position: relative;
+  left: 30px; */
+  line-height: 1.2;
+}
+
+/* Badge: keep in-flow, do not allow it to shrink; clamp long text */
 .badge {
   display: inline-block;
-  margin-left: auto;   /* pushes badge to the right inside the flex row */
+  margin-left: auto;   /* pushes badge toward the right */
   padding: 2px 8px;
   border-radius: 12px;
   font-size: 12px;
   color: white;
-  white-space: nowrap; /* avoid multi-line badge */
+  white-space: nowrap;
   cursor: pointer;
+  flex-shrink: 0;      /* don't let it disappear */
+  max-width: 40%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .badge.work { background: #2196F3; }
 .badge.personal { background: #9C27B0; }
@@ -287,13 +279,11 @@ body.dark ul li:hover { background: #444; }
 
 /* ---------------- Responsive Fixes ---------------- */
 @media (max-width: 600px) {
-  /* Reduce outer padding for mobile */
   .to-do-app {
     margin: 40px auto 20px;
     padding: 20px 15px 30px;
   }
 
-  /* Stack inputs instead of overflow */
   .row {
     flex-wrap: wrap;
     justify-content: center;
@@ -303,8 +293,8 @@ body.dark ul li:hover { background: #444; }
   .row input[type="text"],
   .row select,
   .row button {
-    width: 100%;     /* take full width on small screens */
-    margin: 0;       /* reset right margin */
+    width: 100%;
+    margin: 0;
   }
 
   .row button {
@@ -312,7 +302,6 @@ body.dark ul li:hover { background: #444; }
     font-size: 14px;
   }
 
-  /* Search + filter controls also stack */
   .controls {
     flex-direction: column;
     align-items: stretch;
@@ -324,7 +313,6 @@ body.dark ul li:hover { background: #444; }
     width: 100%;
   }
 
-  /* Footer text shrink for small devices */
   footer {
     font-size: 12px;
     padding: 12px;
@@ -335,6 +323,7 @@ body.dark ul li:hover { background: #444; }
     margin: 5px;
     font-size: 12px;
   }
+
   body {
     padding: 10px;
   }
@@ -357,10 +346,7 @@ body.dark ul li:hover { background: #444; }
     padding: 10px;
   }
 
-  ul li span {
-    font-size: 12px;
-    width: 18px;
-    height: 18px;
-    line-height: 18px;
-  }
+  /* badge clamp on narrow screens */
+  .badge { max-width: 110px; font-size: 11px; padding: 3px 8px; }
+  .delete { width: 30px; height: 30px; font-size: 16px; }
 }
